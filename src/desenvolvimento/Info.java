@@ -10,7 +10,7 @@ import java.util.Hashtable;
  *
  */
 public class Info {
-	private Hashtable<String, String> tabelaConversorHexBin = new Hashtable<>();
+	private static Hashtable<String, String> tabelaConversorHexBin = new Hashtable<>();
 
 	public Info(){
 		tabelaConversorHexBin.put("0", "0000");
@@ -32,7 +32,7 @@ public class Info {
 	}
 
 	//retorna a expressão que está em hexadecimal para binário
-	public String converterHexBin(String numeroHex){
+	public static String converterHexBin(String numeroHex){
 		String numBin = "";
 		//começa do índice 2 pq o 0x do início das instruções em hexa são 
 		// desconsiderados
