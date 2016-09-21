@@ -11,10 +11,9 @@ public class Conversor {
 	private static Hashtable<String, String> tabelaConversorHexBin = new Hashtable<>();
 
 	public static void main(String[] args){
-		Conversor conv = new Conversor();//0x24410064
+		Conversor conv = new Conversor();
 		String exemploHex = new String("0x10fcafe0");
-		String conversao = "1101010100101010"; //converterHexBin(exemploHex);
-		//System.out.println(conversao);
+		String conversao = "1101010100101010"; 
 		conversao = converterBinDec(conversao);
 		System.out.println(conversao);
 	}

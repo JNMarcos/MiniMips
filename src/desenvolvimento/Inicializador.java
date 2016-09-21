@@ -39,31 +39,40 @@ public class Inicializador {
 				System.out.println(sa);
 				
 				if(funcao.equals("add") || funcao.equals("sub") || funcao.equals("slt") || funcao.equals("and") || funcao.equals("or") || funcao.equals("xor") || funcao.equals("nor") || funcao.equals("addu") || funcao.equals("subu")){
-					writer.println(funcao +" "+ rd +" "+ rs +" "+rt);
+					writer.println(funcao +" "+ rd +", "+ rs +", "+rt);
 				}else if(funcao.equals("mult") || funcao.equals("multu") || funcao.equals("div") || funcao.equals("divu") ){
-					writer.println(funcao +" "+ rs +" "+ rt);
+					writer.println(funcao +" "+ rs +", "+ rt);
 				}else if(funcao.equals("mfhi") || funcao.equals("mflo")){
 					writer.println(funcao +" "+ rd);
 				}else if(funcao.equals("sll") || funcao.equals("srl") || funcao.equals("sra")){
-					writer.println(funcao +" "+ rd +" "+ rs +" "+sa);
+					writer.println(funcao +" "+ rd +", "+ rs +", "+sa);
 				}else if(funcao.equals("sllv") || funcao.equals("srlv") || funcao.equals("srav")){
-					writer.println(funcao +" "+ rd +" "+ rt +" "+rs);
+					writer.println(funcao +" "+ rd +", "+ rt +", "+rs);
 				}else if(funcao.equals("jr")){
 					writer.println(funcao +" "+ rs);
 				}
 			} else if (opcode.equals(OPCODE_J)  || opcode.equals(OPCODE_JAL) ){ // é uma instrução do tipo J
-				//target
+				opcode = info.opcodesJ.get(binario.substring(0,6) + "");
+				writer.println(opcode +" start");
 				
-			} else { // é uma instrução do tipo I
-				//FAÇA AQUI PARA IDENTIFICAR QUAL INSTRUÇÃO I É
-				//MESMA COISA DO QUE TEM EM R
-				//...
-				//instrucao = instrucao + ALGUMA COISA;
-				//...
+			} else { 
+				opcode = info.opcodesI.get(binario.substring(0,6) + "");
+				rs = info.registradores.get(binario.substring(6,11) + "");
+				rt = info.registradores.get(binario.substring(11,16)+ "");
+				immediate = conversor.converterBinDec(binario.substring(16,32));
 				
+				if(opcode.equals("lui")){
+					writer.println(opcode +" "+ rt +" "+ immediate);
+				}else if(opcode.equals("addi") || opcode.equals("slti") || opcode.equals("andi") || opcode.equals("ori") || opcode.equals("xori") || opcode.equals("addiu")){
+					writer.println(opcode +" "+ rt +", "+ rs +", "+immediate);
+				}else if(opcode.equals("bltz")){
+					writer.println(opcode +" "+ rs +" start");
+				}else if(opcode.equals("beq") || opcode.equals("bne")){
+					writer.println(opcode +" "+ rs +", "+ rt +", start");
+				}else if(opcode.equals("lb") || opcode.equals("lbu") || opcode.equals("sb") || opcode.equals("lw") || opcode.equals("sw")){
+					writer.println(opcode +" "+ rt +", "+ immediate +"("+rs+")");
+				}
 			}
-				//System.out.println(binario);
-				//System.out.println(instrucao);
 		}
 		writer.close();
 	}
