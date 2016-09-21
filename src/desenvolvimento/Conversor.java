@@ -10,12 +10,12 @@ import java.util.Hashtable;
 public class Conversor {
 	private static Hashtable<String, String> tabelaConversorHexBin = new Hashtable<>();
 
-	public static void main(String[] args){
-		Conversor conv = new Conversor();
-		String exemploHex = new String("0x24410064");
+	/*public static void main(String[] args){
+		Conversor conv = new Conversor();//0x24410064
+		String exemploHex = new String("0x0c100000");
 		String conversao = converterHexBin(exemploHex);
 		System.out.println(conversao);
-	}
+	}*/
 	
 	public Conversor(){
 		tabelaConversorHexBin.put("0", "0000");
@@ -38,11 +38,13 @@ public class Conversor {
 
 	//retorna a expressão que está em hexadecimal para binário
 	public static String converterHexBin(String numeroHex){
+		
 		String numBin = "";
 		//começa do índice 2 pq o 0x do início das instruções em hexa são 
 		// desconsiderados
 		for (int i = 2; i < 10; i++){ 
 			numBin = numBin + tabelaConversorHexBin.get(numeroHex.charAt(i) + "");
+			
 		}
 		return numBin;
 	}

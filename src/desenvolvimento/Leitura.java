@@ -18,9 +18,7 @@ public class Leitura {
 		        line = br.readLine();
 		        
 		    }
-		    for(int i=0;i<instrucoes.size();i++){
-		    	System.out.println(instrucoes.get(i));
-		    }
+
 		} finally {
 		    br.close();
 		}
