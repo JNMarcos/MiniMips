@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class Inicializador {
 	 public static void main(String[] args) throws IOException{
-		 ArrayList<String> instrucoes = new ArrayList();
+		 ArrayList<String> instrucoes;
 		 instrucoes = Leitura.lerArquivo();
-		 String bin = Info.converterHexBin(instrucoes.get(0));
+		 String binario;
 		 
 		 for(int i=0; i<instrucoes.size();i++){
-			String binario = Conversor.converter(instrucoes.get(i).substring(instrucoes.get(i).indexOf("x") + 1, instrucoes.get(i).length()));
+			binario = Conversor.converterHexBin(instrucoes.get(i));
 			System.out.println(binario);
 		 }
 	 }
