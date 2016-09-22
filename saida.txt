@@ -15,7 +15,7 @@ lw $1, 100($2)
 sw $1, 100($2)
 j start
 jr $1
-bltz, $1 start
+bltz $1 start
 beq $1, $2, start
 bne $1, $2, start
 mfhi $1

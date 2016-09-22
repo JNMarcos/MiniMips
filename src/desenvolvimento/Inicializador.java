@@ -29,14 +29,13 @@ public class Inicializador {
 		for(int i=0; i<instrucoes.size()-1;i++){
 			binario = conversor.converterHexBin(instrucoes.get(i));
 			opcode = binario.substring(INICIO_INSTRUCAO, FIM_OPCODE);
-			
+			System.out.println(instrucoes.get(instrucoes.size()-1));
 			if (opcode.equals(OPCODE_R)){
 				funcao = info.funcoesR.get(binario.substring(26,32) + "");
 				rs = info.registradores.get(binario.substring(6,11) + "");
 				rt = info.registradores.get(binario.substring(11,16)+ "");
 				rd = info.registradores.get(binario.substring(16,21)+ "");
 				sa = info.registradores.get(binario.substring(21,26)+ "");
-				System.out.println(sa);
 				
 				if(funcao.equals("add") || funcao.equals("sub") || funcao.equals("slt") || funcao.equals("and") || funcao.equals("or") || funcao.equals("xor") || funcao.equals("nor") || funcao.equals("addu") || funcao.equals("subu")){
 					writer.println(funcao +" "+ rd +", "+ rs +", "+rt);
