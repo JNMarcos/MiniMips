@@ -13,11 +13,11 @@ ori $1, $2, 100
 xori $1, $2, 100
 lw $1, 100($2)
 sw $1, 100($2)
-j start
+j 1048576
 jr $1
-bltz $1 start
-beq $1, $2, start
-bne $1, $2, start
+bltz $1 -18
+beq $1, $2, -19
+bne $1, $2, -20
 mfhi $1
 mflo $1
 addu $1, $2, $3
@@ -36,4 +36,4 @@ srav $1, $2, $3
 lb $1, 100($2)
 lbu $1, 100($2)
 sb $1, 100($2)
-jal start
+jal 1048576

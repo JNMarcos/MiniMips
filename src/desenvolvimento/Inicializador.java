@@ -23,13 +23,15 @@ public class Inicializador {
 		String binario;
 		//contém a instrução em instrução humana
 		String instrucao = "";
-		
+
+
 		PrintWriter writer = new PrintWriter("saida.txt", "UTF-8");
-		  
+		
 		for(int i=0; i<instrucoes.size()-1;i++){
 			binario = conversor.converterHexBin(instrucoes.get(i));
 			opcode = binario.substring(INICIO_INSTRUCAO, FIM_OPCODE);
-			System.out.println(instrucoes.get(instrucoes.size()-1));
+			
+
 			if (opcode.equals(OPCODE_R)){
 				funcao = info.funcoesR.get(binario.substring(26,32) + "");
 				rs = info.registradores.get(binario.substring(6,11) + "");
@@ -52,27 +54,33 @@ public class Inicializador {
 				}
 			} else if (opcode.equals(OPCODE_J)  || opcode.equals(OPCODE_JAL) ){ // é uma instrução do tipo J
 				opcode = info.opcodesJ.get(binario.substring(0,6) + "");
-				writer.println(opcode +" start");
+				String jump = conversor.converterBinDecimal(binario.substring(6,32)); 
+				writer.println(opcode +" "+jump);
 				
-			} else { 
+			}else { 
 				opcode = info.opcodesI.get(binario.substring(0,6) + "");
 				rs = info.registradores.get(binario.substring(6,11) + "");
 				rt = info.registradores.get(binario.substring(11,16)+ "");
-				immediate = conversor.converterBinDec(binario.substring(16,32));
+				if(opcode.equals("addiu") || opcode.equals("addu") || opcode.equals("subu") || opcode.equals("subiu")){
+					immediate = conversor.converterBinDecimal(binario.substring(16,32));
+				}else{
+					immediate = conversor.converterBinDec(binario.substring(16,32));
+				}
 				
 				if(opcode.equals("lui")){
 					writer.println(opcode +" "+ rt +" "+ immediate);
 				}else if(opcode.equals("addi") || opcode.equals("slti") || opcode.equals("andi") || opcode.equals("ori") || opcode.equals("xori") || opcode.equals("addiu")){
 					writer.println(opcode +" "+ rt +", "+ rs +", "+immediate);
 				}else if(opcode.equals("bltz")){
-					writer.println(opcode +" "+ rs +" start");
+					writer.println(opcode +" "+ rs +" "+ immediate);
 				}else if(opcode.equals("beq") || opcode.equals("bne")){
-					writer.println(opcode +" "+ rs +", "+ rt +", start");
+					writer.println(opcode +" "+ rs +", "+ rt +", "+immediate);
 				}else if(opcode.equals("lb") || opcode.equals("lbu") || opcode.equals("sb") || opcode.equals("lw") || opcode.equals("sw")){
 					writer.println(opcode +" "+ rt +", "+ immediate +"("+rs+")");
 				}
 			}
 		}
+		
 		writer.close();
 	}
 }
