@@ -83,7 +83,6 @@ public class Inicializador {
 				writer.println("syscal");
 			}
 		}
-		
 		writer.close();
 	}
 }
