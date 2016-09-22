@@ -79,6 +79,9 @@ public class Inicializador {
 					writer.println(opcode +" "+ rt +", "+ immediate +"("+rs+")");
 				}
 			}
+			if(i == instrucoes.size()-2){
+				writer.println("syscal");
+			}
 		}
 		
 		writer.close();

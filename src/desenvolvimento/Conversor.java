@@ -15,7 +15,6 @@ public class Conversor {
 		String exemploHex = new String("0x10fcafe0");
 		String conversao = "1101010100101010"; 
 		conversao = converterBinDec(conversao);
-		System.out.println(conversao);
 	}
 
 	public Conversor(){
@@ -69,7 +68,7 @@ public class Conversor {
 		}
 
 		if (isPos == false){
-			numDec = "- " + numDecimal;
+			numDec = "-" + numDecimal;
 		} else{
 			numDec = "" + numDecimal;
 		}
@@ -112,7 +111,24 @@ public class Conversor {
 				break;
 			}
 		}
-		System.out.println("complemento a dois: " + numPos);
 		return numPos;
+	}
+	//sem complemento
+	public static String converterBinDecimal(String numeroBin){
+		String numDec = "";
+		boolean isPos = true;
+		int numDecimal = 0;
+		
+		for (int i = numeroBin.length() - 1; i >=0; i--){
+			numDecimal = (int) (numDecimal + Integer.parseInt(numeroBin.charAt(i) + "") * Math.pow(2, (numeroBin.length() - 1) - i));
+		}
+
+		if (isPos == false){
+			numDec = "-" + numDecimal; 
+		} else{
+			numDec = "" + numDecimal;
+		}
+		
+		return numDec;
 	}
 }
