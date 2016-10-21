@@ -17,6 +17,11 @@ public class Inicializador {
 		int[] registradores = new int[32];
 		int hi = 0;
 		int lo = 0;
+		
+		String[] registradoresStr = new String[32];
+		String hiStr = "0";
+		String loStr = "0";
+		
 		String opcode, funcao, rd, rs, rt, sa, immediate, target;
 		int rdInt, rsInt, rtInt, saInt, immediateInt, targetInt;
 		Conversor conversor = new Conversor();
@@ -27,7 +32,8 @@ public class Inicializador {
 		String instrucao = "";
 		
 		for(int i=0; i<registradores.length; i++){
-			registradores[i] = 0;			
+			registradores[i] = 5;
+			registradoresStr[i] = "0";
 		}
 
 		PrintWriter writer = new PrintWriter("saida.txt", "UTF-8");
@@ -132,31 +138,52 @@ public class Inicializador {
 
 					break;
 				case "sll":
-					if(registradores[rsInt] < saInt){
-						registradores[rdInt] = 1;
-					}else{
-						registradores[rdInt] = 0;
+					int intermediarioSLL = registradores[rtInt];
+					for (long j = 0; j < saInt; j++){
+						intermediarioSLL = intermediarioSLL * 2;
 					}
+					registradores[rdInt] = intermediarioSLL;
 					break;
-				case "srl":
-					if(registradores[rsInt] > saInt){
-						registradores[rdInt] = 1;
-					}else{
-						registradores[rdInt] = 0;
+				case "srl": //não mantém sinal
+					int intermediarioSRL = registradores[rtInt];
+					if (registradores[rtInt] < 0){
+						intermediarioSRL= -1 * registradores[rtInt];
 					}
+					for (long j = 0; j < saInt; j++){
+						intermediarioSRL = intermediarioSRL / 2;
+					}
+					registradores[rdInt] = intermediarioSRL;
 					break;
-				case "sra":
-					if(registradores[rsInt] < saInt){
-						registradores[rdInt] = 1;
-					}else{
-						registradores[rdInt] = 0;
+				case "sra": //mantém sinal
+					int intermediarioSRA = registradores[rtInt];
+					for (long j = 0; j < saInt; j++){
+						intermediarioSRA = intermediarioSRA / 2;
 					}
+					registradores[rdInt] = intermediarioSRA;
 					break;
 				case "sllv":
+					int intermediarioSLLV = registradores[rtInt];
+					for (long j = 0; j < (registradores[rsInt] % 4294967296L); j++){
+						intermediarioSLLV = intermediarioSLLV * 2;
+					}
+					registradores[rdInt] = intermediarioSLLV;
 					break;
-				case "srlv":
+				case "srlv": //não mantém sinal
+					int intermediarioSRLV = registradores[rtInt];
+					if (registradores[rsInt] < 0){
+						intermediarioSRLV = -1 * registradores[rtInt];
+					}
+					for (long j = 0; j < (registradores[rsInt] % 4294967296L); j++){
+						intermediarioSRLV = intermediarioSRLV / 2;
+					}
+					registradores[rdInt] = intermediarioSRLV;
 					break;
-				case "srav":
+				case "srav": //mantém sinal
+					int intermediarioSRAV = registradores[rtInt];
+					for (long j = 0; j < (registradores[rsInt] % 4294967296L); j++){
+						intermediarioSRAV = intermediarioSRAV / 2;
+					}
+					registradores[rdInt] = intermediarioSRAV;
 					break;
 				case "jr":
 					break;
