@@ -106,16 +106,25 @@ public class Inicializador {
 					break;
 				case "addu":
 					registradores[rdInt] = registradores[rsInt] + registradores[rtInt];
+					if (registradores[rdInt] < 0){
+						registradores[rdInt] = -1 * registradores[rdInt];
+					}
 					break;
 				case "subu":
 					registradores[rdInt] = registradores[rsInt] - registradores[rtInt];
+					if (registradores[rdInt] < 0){
+						registradores[rdInt] = -1 * registradores[rdInt];
+					}
 					break;
 				case "mult":
 					hi = registradores[rsInt] * registradores[rtInt]; 
 					lo = hi;
 					break;
 				case "multu":
-					hi = registradores[rsInt] * registradores[rtInt]; 
+					hi = registradores[rsInt] * registradores[rtInt];
+					if (hi < 0){
+						hi = -1 * hi;
+					}
 					lo = hi;
 					break;
 				case "div":
@@ -127,8 +136,12 @@ public class Inicializador {
 				case "divu":
 					if(registradores[rtInt] != 0)
 						lo = registradores[rsInt]/registradores[rtInt];
-					if(registradores[rtInt] != 0)
+					if(registradores[rtInt] != 0){
 						hi =  registradores[rsInt]%registradores[rtInt];
+						if (hi < 0){
+							hi= -1 * hi;
+						}
+					}
 					break;
 				case "mfhi":
 					registradores[rdInt] = hi;
