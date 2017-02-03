@@ -10,12 +10,14 @@ import java.util.Hashtable;
 public class Conversor {
 	private static Hashtable<String, String> tabelaConversorHexBin = new Hashtable<>();
 
+	/*
 	public static void main(String[] args){
 		Conversor conv = new Conversor();
 		String exemploHex = new String("0x10fcafe0");
 		String conversao = "1101010100101010"; 
 		conversao = converterBinDec(conversao);
 	}
+	 */
 
 	public Conversor(){
 		tabelaConversorHexBin.put("0", "0000");
@@ -37,20 +39,25 @@ public class Conversor {
 	}
 
 	//retorna a expressão que está em hexadecimal para binário
-	public static String converterHexBin(String numeroHex){
-
+	public String converterHexBin(String numeroHex){
 		String numBin = "";
 		//começa do índice 2 pq o 0x do início das instruções em hexa são 
 		// desconsiderados
-		for (int i = 2; i < 10; i++){ 
-			numBin = numBin + tabelaConversorHexBin.get(numeroHex.charAt(i) + "");
+		if (numeroHex.contains("0x")){
+			for (int i = 2; i < 10; i++){ 
+				numBin = numBin + tabelaConversorHexBin.get(numeroHex.charAt(i) + "");
+			}
+		} else{
 
+			for (int i = 0; i < 8; i++){ 
+				numBin = numBin + tabelaConversorHexBin.get(numeroHex.charAt(i) + "");
+			}
 		}
 		return numBin;
 	}
 
 	//complemento a dois
-	public static String converterBinDec(String numeroBin){
+	public String converterBinDec(String numeroBin){
 		String numDec = "";
 		boolean isPos = true;
 		int numDecimal = 0;
@@ -62,7 +69,7 @@ public class Conversor {
 		} else {
 			numBinP = numeroBin;
 		}
-		
+
 		for (int i = numBinP.length() - 1; i >=0; i--){
 			numDecimal = (int) (numDecimal + Integer.parseInt(numBinP.charAt(i) + "") * Math.pow(2, (numBinP.length() - 1) - i));
 		}
@@ -72,21 +79,21 @@ public class Conversor {
 		} else{
 			numDec = "" + numDecimal;
 		}
-		
+
 		return numDec;
 	}
-	
-	private static String converterBinBinPos (String numeroBin){
+
+	public String converterBinBinPos (String numeroBin){
 		String numBin = "";
 		String numPos = "";
 		boolean isVaiUm = true;
 		boolean isPodeSair = false;
-		
+
 		//inverte todos os números (complemento a um)
 		numBin = numeroBin.replace('1', 'x');
 		numBin = numBin.replace('0', '1');
 		numBin = numBin.replace('x', '0');
-		
+
 		// soma um ao número achado anteriormente (agora, complemento a dois)
 		for (int i = numBin.length() - 1; i >= 0; i--){
 			if (numBin.charAt(i) == '0'){
@@ -105,7 +112,7 @@ public class Conversor {
 					isPodeSair = true;
 				}
 			}
-			
+
 			if (isPodeSair){
 				numPos = numBin.substring(0, i) + numPos;
 				break;
@@ -113,22 +120,16 @@ public class Conversor {
 		}
 		return numPos;
 	}
+
 	//sem complemento
-	public static String converterBinDecimal(String numeroBin){
+	public String converterBinDecimal(String numeroBin){
 		String numDec = "";
-		boolean isPos = true;
 		int numDecimal = 0;
-		
-		for (int i = numeroBin.length() - 1; i >=0; i--){
+
+		for (int i = numeroBin.length() - 1; i >= 0; i--){
 			numDecimal = (int) (numDecimal + Integer.parseInt(numeroBin.charAt(i) + "") * Math.pow(2, (numeroBin.length() - 1) - i));
 		}
-
-		if (isPos == false){
-			numDec = "-" + numDecimal; 
-		} else{
-			numDec = "" + numDecimal;
-		}
-		
+		numDec = "" + numDecimal;
 		return numDec;
 	}
 }

@@ -16,7 +16,6 @@ public class Leitura {
 		    while (line != null) {
 		    	instrucoes.add(line);
 		        line = br.readLine();
-		        
 		    }
 
 		} finally {
