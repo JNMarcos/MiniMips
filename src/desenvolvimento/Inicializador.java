@@ -261,7 +261,7 @@ public class Inicializador {
 				}else if(opcode.equals("addi") || opcode.equals("slti") || opcode.equals("andi") || opcode.equals("ori") || opcode.equals("xori") || opcode.equals("addiu")){
 					writer.println(opcode +" $"+ rt +", $"+ rs +", "+immediate);
 				}else if(opcode.equals("bltz")){
-					writer.println(opcode +" $"+ rs +" "+ immediate);
+					writer.println(opcode +" $"+ rs +", "+ immediate);
 				}else if(opcode.equals("beq") || opcode.equals("bne")){
 					writer.println(opcode +" $"+ rs +", $"+ rt +", "+immediate);
 				}else if(opcode.equals("lb") || opcode.equals("lbu") || opcode.equals("sb") || opcode.equals("lw") || opcode.equals("sw")){
@@ -326,12 +326,17 @@ public class Inicializador {
 					registradores[rtInt] = caixa;
 					break;
 				case "lbu":
-					immediate = conversor.converterBinDecimal(binario.substring(16,32));//sem complemento
+					/*immediate = conversor.converterBinDecimal(binario.substring(16,32));//sem complemento
 					immediateInt = Integer.parseInt(immediate);
 					caixa = memoria[Inicializador.carregarByte(Integer.toBinaryString(registradores[rsInt]), immediateInt, 0)];
 					registradores[rtInt] = caixa;
-					break;
+					 */break;
 				case "sb":
+					String aux = Integer.toBinaryString(registradores[rtInt]);
+					aux = "0000000" + aux; //garante que haja ao menos 8 dígitos
+					System.out.println(aux);
+					aux = aux.substring(aux.length() - 8, aux.length());
+					memoria[Inicializador.carregarByte(Integer.toBinaryString(registradores[rsInt]), immediateInt, 1)] = Integer.parseInt(aux);
 					break;
 				case "lw":
 					caixa = memoria[Inicializador.carregarByte(Integer.toBinaryString(registradores[rsInt]), immediateInt, 1)];
@@ -361,17 +366,18 @@ public class Inicializador {
 			numeroBin = "0" + numeroBin;
 			System.out.println(numeroBin);
 		}
-		//System.out.println(imed);
+		System.out.println(imed);
 		String auxiliar = "";
 
-			for (int k = imed; k <= imed + 8; k++){
-				System.out.println(auxiliar);
-				auxiliar = numeroBin.charAt(k) + auxiliar;
-			}
-			//for (int k = 0; k < 32; k++){
-				//System.out.println(auxiliar);
-				//auxiliar = numeroBin.charAt(k) + auxiliar;
-			//}
+		for (int k = imed; k < imed + 8; k++){
+
+			auxiliar = numeroBin.charAt(k) + auxiliar;
+			System.out.println(auxiliar);
+		}
+		//for (int k = 0; k < 32; k++){
+		//System.out.println(auxiliar);
+		//auxiliar = numeroBin.charAt(k) + auxiliar;
+		//}
 
 		System.out.println(auxiliar + "  j");
 		return Integer.parseInt(auxiliar);
