@@ -326,11 +326,11 @@ public class Inicializador {
 					registradores[rtInt] = caixa;
 					break;
 				case "lbu":
-					/*immediate = conversor.converterBinDecimal(binario.substring(16,32));//sem complemento
+					immediate = conversor.converterBinDecimal(binario.substring(16,32));//sem complemento
 					immediateInt = Integer.parseInt(immediate);
 					caixa = memoria[Inicializador.carregarByte(Integer.toBinaryString(registradores[rsInt]), immediateInt, 0)];
-					registradores[rtInt] = caixa;
-					 */break;
+					//registradores[rtInt] = caixa;
+					 break;
 				case "sb":
 					String aux = Integer.toBinaryString(registradores[rtInt]);
 					aux = "0000000" + aux; //garante que haja ao menos 8 dígitos
@@ -343,6 +343,7 @@ public class Inicializador {
 					registradores[rtInt] = caixa;
 					break;
 				case "sw":
+					memoria[Inicializador.carregarByte(Integer.toBinaryString(registradores[rsInt]), immediateInt, 1)] = registradores[rtInt];
 					break;				
 				}
 			}
